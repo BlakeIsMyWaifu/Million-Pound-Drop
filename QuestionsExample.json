@@ -1,0 +1,66 @@
+{
+	"category 1": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 2": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 3": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 4": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 5": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 6": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 7": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	},
+	"category 8": {
+		"answer": "one",
+		"other": [
+			"two",
+			"three",
+			"four"
+		]
+	}
+}

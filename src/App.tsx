@@ -1,13 +1,10 @@
-import { Center, MantineProvider, Title } from '@mantine/core'
+import { MantineProvider } from '@mantine/core'
+import Home from './Home'
 
-function App() {
+export default function App() {
 	return (
 		<MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'dark' }}>
-			<Center>
-				<Title>Million Pound Drop</Title>
-			</Center>
+			<Home />
 		</MantineProvider>
 	)
 }
-
-export default App

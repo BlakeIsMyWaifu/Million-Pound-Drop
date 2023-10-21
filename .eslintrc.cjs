@@ -15,6 +15,7 @@ module.exports = {
 	plugins: ['react-refresh', 'simple-import-sort'],
 	rules: {
 		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+		'react/self-closing-comp': ['warn', { component: true, html: true }],
 		'simple-import-sort/imports': 'warn',
 		'simple-import-sort/exports': 'warn',
 		'@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'after-used', argsIgnorePattern: '^_' }],
