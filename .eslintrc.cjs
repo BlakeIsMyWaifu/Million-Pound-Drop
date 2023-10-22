@@ -2,6 +2,10 @@
 module.exports = {
 	root: true,
 	env: { browser: true, es2020: true },
+	settings: { react: { version: 'detect' } },
+	parser: '@typescript-eslint/parser',
+	parserOptions: { ecmaFeatures: { jsx: true }, project: './tsconfig.json' },
+	overrides: [{ extends: ['plugin:@typescript-eslint/disable-type-checked'], files: ['vite.config.ts'], }],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/strict-type-checked',

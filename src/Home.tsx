@@ -1,5 +1,7 @@
-import { Button, Center, Modal, Stack, Title, Text } from '@mantine/core'
+import { Button, Center, Modal, Stack, Text, Title } from '@mantine/core'
 import { useRef, useState } from 'react'
+
+import { type Questions, useGameStore } from './useGameStore'
 
 export default function Home() {
 	return (
@@ -22,6 +24,8 @@ function ImportQuestions() {
 	const [modalMessage, setModalMessage] = useState('')
 	const [modalState, setModalState] = useState(false)
 
+	const setInGame = useGameStore(state => state.startGame)
+
 	return (
 		<>
 			<Button
@@ -43,8 +47,9 @@ function ImportQuestions() {
 						try {
 							const result = event.target?.result
 							isString(result)
-							const json: object = JSON.parse(result)
+							const json = JSON.parse(result) as object
 							validateQuestions(json)
+							setInGame(json)
 						} catch (error) {
 							if (error instanceof Error) {
 								console.error(error)
@@ -67,17 +72,12 @@ function isString(value: unknown): asserts value is string {
 	if (typeof value !== 'string') throw new Error('value is not a string')
 }
 
-type Questions = Record<string, Category>
-type Category = {
-	answer: string
-	other: [string, string, string]
-}
-
 function validateQuestions(json: object): asserts json is Questions {
 	const questions = Object.values(json)
 	if (questions.length !== 8) throw new Error('Invalid amount of categories')
-	questions.forEach((question: Category) => {
+	questions.forEach((question: Questions['']) => {
 		isString(question.answer)
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (question.other.length !== 3) throw new Error('Invalid amount of other answers')
 		isString(question.other[0])
 		isString(question.other[1])
