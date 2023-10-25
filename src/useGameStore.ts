@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware'
 
 export type Questions = Record<string, Question>
 export type Question = {
+	question: string
 	answer: string
 	other: [string, string, string]
 }
@@ -17,8 +18,9 @@ type GameState =
 			inGame: true
 			questions: Questions
 			round: number
-			activeQuestion: Question | null
+			activeCategory: { category: string; question: Question } | null
 			remainingCategories: (string | null)[]
+			remainingMoney: number
 	  }
 type ActiveGameState = GameState & { inGame: true }
 
@@ -28,7 +30,7 @@ const gameState: GameState = {
 
 type GameAction = {
 	startGame: (questions: Questions) => void
-	setActiveQuestion: (category: string) => void
+	setActiveCategory: (category: string) => void
 }
 
 const actionName = (actionName: keyof GameAction): [false, string] => [false, `game/${actionName}`]
@@ -41,16 +43,17 @@ const gameAction: StateCreator<GameStore, [['zustand/devtools', never]], [], Gam
 				inGame: true,
 				questions,
 				round: 1,
-				activeQuestion: null,
-				remainingCategories: Object.keys(questions)
+				activeCategory: null,
+				remainingCategories: Object.keys(questions),
+				remainingMoney: 1_000_000
 			} satisfies ActiveGameState,
 			...actionName('startGame')
 		)
 	},
-	setActiveQuestion: category => {
+	setActiveCategory: category => {
 		const state = get()
 		if (!state.inGame) return
-		set({ activeQuestion: state.questions[category] })
+		set({ activeCategory: { category, question: state.questions[category] } })
 	}
 })
 

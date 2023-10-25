@@ -1,8 +1,13 @@
 import CategorySelect from './CategorySelect'
+import Question from './Question'
 import { useInGameStore } from './useGameStore'
 
 export default function Game() {
-	const activeQuestion = useInGameStore('activeQuestion')
+	const activeCategory = useInGameStore('activeCategory')
 
-	return <CategorySelect />
+	return activeCategory ? (
+		<Question category={activeCategory.category} question={activeCategory.question} />
+	) : (
+		<CategorySelect />
+	)
 }

@@ -14,14 +14,14 @@ export default function CategorySelect() {
 		>
 			<Title align='center'>Category</Title>
 			<SimpleGrid
-				cols={4}
 				breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]}
+				cols={4}
 				style={{
 					flexGrow: 1
 				}}
 			>
 				{remainingCategories.map((category, i) => {
-					return category ? <Category key={i} category={category} /> : <div key={i} />
+					return category ? <Category category={category} key={i} /> : <div key={i} />
 				})}
 			</SimpleGrid>
 		</Stack>
@@ -33,7 +33,7 @@ type CategoryProps = {
 }
 
 function Category({ category }: CategoryProps) {
-	const setActiveQuestion = useInGameStore('setActiveQuestion')
+	const setActiveQuestion = useInGameStore('setActiveCategory')
 
 	return (
 		<UnstyledButton

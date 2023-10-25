@@ -38,9 +38,9 @@ function ImportQuestions() {
 
 			<input
 				hidden
+				accept='application/json'
 				ref={fileInputRef}
 				type='file'
-				accept='application/json'
 				onInput={event => {
 					const reader = new FileReader()
 					reader.onload = event => {
@@ -63,7 +63,7 @@ function ImportQuestions() {
 				}}
 			/>
 
-			<ErrorModal message={modalMessage} state={modalState} setState={setModalState} />
+			<ErrorModal message={modalMessage} setState={setModalState} state={modalState} />
 		</>
 	)
 }
@@ -76,6 +76,7 @@ function validateQuestions(json: object): asserts json is Questions {
 	const questions = Object.values(json)
 	if (questions.length !== 8) throw new Error('Invalid amount of categories')
 	questions.forEach((question: Question) => {
+		isString(question.question)
 		isString(question.answer)
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (question.other.length !== 3) throw new Error('Invalid amount of other answers')

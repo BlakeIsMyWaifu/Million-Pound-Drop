@@ -20,12 +20,12 @@ module.exports = {
 	rules: {
 		'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
 		'react/self-closing-comp': ['warn', { component: true, html: true }],
+		'react/jsx-sort-props': ['warn', { shorthandFirst: true, callbacksLast: true }],
 		'simple-import-sort/imports': 'warn',
 		'simple-import-sort/exports': 'warn',
 		'@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'after-used', argsIgnorePattern: '^_' }],
 		'@typescript-eslint/no-empty-function': 'warn',
 		'@typescript-eslint/no-empty-interface': 'warn',
-		'@typescript-eslint/consistent-type-imports': ['warn', { fixStyle: 'inline-type-imports' }
-		]
+		'@typescript-eslint/consistent-type-imports': ['warn', { fixStyle: 'inline-type-imports' }],
 	}
 }

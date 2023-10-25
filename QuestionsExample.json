@@ -1,5 +1,6 @@
 {
 	"category 1": {
+		"question": "one",
 		"answer": "one",
 		"other": [
 			"answer one",
@@ -8,6 +9,7 @@
 		]
 	},
 	"category 2": {
+		"question": "two",
 		"answer": "two",
 		"other": [
 			"answer one",
@@ -16,6 +18,7 @@
 		]
 	},
 	"category 3": {
+		"question": "three",
 		"answer": "three",
 		"other": [
 			"answer one",
@@ -24,6 +27,7 @@
 		]
 	},
 	"category 4": {
+		"question": "four",
 		"answer": "four",
 		"other": [
 			"answer one",
@@ -32,6 +36,7 @@
 		]
 	},
 	"category 5": {
+		"question": "five",
 		"answer": "five",
 		"other": [
 			"answer one",
@@ -40,6 +45,7 @@
 		]
 	},
 	"category 6": {
+		"question": "six",
 		"answer": "six",
 		"other": [
 			"answer one",
@@ -48,6 +54,7 @@
 		]
 	},
 	"category 7": {
+		"question": "seven",
 		"answer": "seven",
 		"other": [
 			"answer one",
@@ -56,6 +63,7 @@
 		]
 	},
 	"category 8": {
+		"question": "eight",
 		"answer": "eight",
 		"other": [
 			"answer one",
