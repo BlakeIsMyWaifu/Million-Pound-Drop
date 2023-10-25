@@ -1,7 +1,7 @@
 import { Button, Center, Modal, Stack, Text, Title } from '@mantine/core'
 import { useRef, useState } from 'react'
 
-import { type Questions, useGameStore } from './useGameStore'
+import { type Question, type Questions, useGameStore } from './useGameStore'
 
 export default function Home() {
 	return (
@@ -75,7 +75,7 @@ function isString(value: unknown): asserts value is string {
 function validateQuestions(json: object): asserts json is Questions {
 	const questions = Object.values(json)
 	if (questions.length !== 8) throw new Error('Invalid amount of categories')
-	questions.forEach((question: Questions['']) => {
+	questions.forEach((question: Question) => {
 		isString(question.answer)
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (question.other.length !== 3) throw new Error('Invalid amount of other answers')

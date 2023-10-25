@@ -2,65 +2,65 @@
 	"category 1": {
 		"answer": "one",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 2": {
-		"answer": "one",
+		"answer": "two",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 3": {
-		"answer": "one",
+		"answer": "three",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 4": {
-		"answer": "one",
+		"answer": "four",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 5": {
-		"answer": "one",
+		"answer": "five",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 6": {
-		"answer": "one",
+		"answer": "six",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 7": {
-		"answer": "one",
+		"answer": "seven",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	},
 	"category 8": {
-		"answer": "one",
+		"answer": "eight",
 		"other": [
-			"two",
-			"three",
-			"four"
+			"answer one",
+			"answer two",
+			"answer three"
 		]
 	}
 }
