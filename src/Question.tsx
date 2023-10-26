@@ -37,13 +37,7 @@ export default function Question() {
 	}, [optionValues, options, question.answer, setActiveCategory, setRemainingMoney])
 
 	return (
-		<Stack
-			align='center'
-			p='xl'
-			style={{
-				height: '100vh'
-			}}
-		>
+		<Stack align='center' p='xl' style={{ height: '100vh' }}>
 			<Title align='center'>{category}</Title>
 			<Text align='center'>{question.question}</Text>
 			<SimpleGrid breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]} cols={4}>
@@ -88,12 +82,7 @@ function Option({ handler, index, maxSelected, option, remaining, value }: Optio
 				backgroundColor: value > 0 ? theme.colors[theme.colorScheme][6] : undefined
 			})}
 		>
-			<Stack
-				justify='center'
-				style={{
-					height: '100%'
-				}}
-			>
+			<Stack justify='center' style={{ height: '100%' }}>
 				<Text align='center' size='xl'>
 					{option}
 				</Text>

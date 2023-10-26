@@ -5,11 +5,7 @@ import { type Question, type Questions, useGameStore } from './useGameStore'
 
 export default function Home() {
 	return (
-		<Center
-			style={{
-				height: '100vh'
-			}}
-		>
+		<Center style={{ height: '100vh' }}>
 			<Stack>
 				<Title>Million Pound Drop</Title>
 				<ImportQuestions />

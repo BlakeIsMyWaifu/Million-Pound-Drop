@@ -30,11 +30,12 @@ const gameState: GameState = {
 
 type GameAction = {
 	startGame: (questions: Questions) => void
+	endGame: () => void
 	setActiveCategory: (category: string | null) => void
 	setRemainingMoney: (amount: number) => void
 }
 
-const actionName = (actionName: keyof GameAction): [false, string] => [false, `game/${actionName}`]
+const actionName = (actionName: keyof GameAction, replace = false): [boolean, string] => [replace, `game/${actionName}`]
 
 const gameAction: StateCreator<GameStore, [['zustand/devtools', never]], [], GameAction> = (set, get) => ({
 	startGame: questions => {
@@ -51,20 +52,27 @@ const gameAction: StateCreator<GameStore, [['zustand/devtools', never]], [], Gam
 			...actionName('startGame')
 		)
 	},
+	endGame: () => {
+		if (!get().inGame) return
+		set({ inGame: false }, ...actionName('endGame'))
+	},
 	setActiveCategory: category => {
 		const state = get()
 		if (!state.inGame) return
-		set({
-			activeCategory: category ? { category, question: state.questions[category] } : null,
-			remainingCategories: state.remainingCategories.map(remainingCategory => {
-				return remainingCategory === category ? null : remainingCategory
-			})
-		})
+		set(
+			{
+				activeCategory: category ? { category, question: state.questions[category] } : null,
+				remainingCategories: state.remainingCategories.map(remainingCategory => {
+					return remainingCategory === category ? null : remainingCategory
+				})
+			},
+			...actionName('setActiveCategory')
+		)
 	},
 	setRemainingMoney: amount => {
 		const state = get()
 		if (!state.inGame) return
-		set({ remainingMoney: amount })
+		set({ remainingMoney: amount }, ...actionName('setRemainingMoney'))
 	}
 })
 
