@@ -9,15 +9,21 @@ export default function Question() {
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const { category, question } = useInGameStore('activeCategory')!
 
-	// TODO remove options in later rounds
+	const roundNumber = 8 - useInGameStore('remainingCategories').filter(Boolean).length
+	const optionCount = roundNumber >= 6 ? (roundNumber >= 8 ? 2 : 3) : 4
+
 	const options = useMemo(() => {
-		const arr = [question.answer, ...question.other]
-		for (let i = arr.length - 1; i > 0; i--) {
-			const j = ~~(Math.random() * arr.length)
-			;[arr[i], arr[j]] = [arr[j], arr[i]]
+		const getOptions = (): string[] => {
+			const arr = [question.answer, ...question.other]
+			for (let i = arr.length - 1; i > 0; i--) {
+				const j = ~~(Math.random() * arr.length)
+				;[arr[i], arr[j]] = [arr[j], arr[i]]
+			}
+			arr.length = optionCount
+			return arr.includes(question.answer) ? arr : getOptions()
 		}
-		return arr
-	}, [question])
+		return getOptions()
+	}, [optionCount, question.answer, question.other])
 
 	const totalRemainingMoney = useInGameStore('remainingMoney')
 
@@ -40,14 +46,15 @@ export default function Question() {
 		<Stack align='center' p='xl' style={{ height: '100vh' }}>
 			<Title align='center'>{category}</Title>
 			<Text align='center'>{question.question}</Text>
-			<SimpleGrid breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]} cols={4}>
+			<SimpleGrid breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]} cols={optionCount}>
 				{options.map((option, i) => {
 					return (
 						<Option
 							handler={optionValueHandler}
 							index={i}
 							key={i}
-							maxSelected={optionValues.filter(value => value > 0).length >= 3}
+							lastRound={roundNumber === 8}
+							maxSelected={optionValues.filter(value => value > 0).length >= optionCount - 1}
 							option={option}
 							remaining={remaining}
 							value={optionValues[i]}
@@ -67,13 +74,14 @@ export default function Question() {
 type OptionProps = {
 	handler: UseListStateHandlers<number>
 	index: number
+	lastRound: boolean
 	maxSelected: boolean
 	option: string
 	remaining: number
 	value: number
 }
 
-function Option({ handler, index, maxSelected, option, remaining, value }: OptionProps) {
+function Option({ handler, index, lastRound, maxSelected, option, remaining, value }: OptionProps) {
 	return (
 		<Paper
 			withBorder
@@ -94,7 +102,7 @@ function Option({ handler, index, maxSelected, option, remaining, value }: Optio
 					max={remaining + value}
 					min={0}
 					parser={value => value.replace(/\$\s?|(,*)/g, '')}
-					step={25_000}
+					step={lastRound ? remaining + value : 25_000}
 					stepHoldDelay={500}
 					stepHoldInterval={t => Math.max(1000 / t ** 2, 25)}
 					value={value}
