@@ -34,7 +34,7 @@ function ImportQuestions() {
 
 			<input
 				hidden
-				accept='application/json'
+				accept='application/json,.questions'
 				ref={fileInputRef}
 				type='file'
 				onInput={event => {

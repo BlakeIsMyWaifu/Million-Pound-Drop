@@ -43,7 +43,7 @@ function Category({ category }: CategoryProps) {
 			>
 				<Stack justify='center' style={{ height: '100%' }}>
 					<Text align='center' size='xl'>
-						{category}
+						{category.split('-')[0]}
 					</Text>
 				</Stack>
 			</Paper>

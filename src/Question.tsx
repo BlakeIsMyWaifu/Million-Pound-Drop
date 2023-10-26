@@ -13,16 +13,14 @@ export default function Question() {
 	const optionCount = roundNumber >= 6 ? (roundNumber >= 8 ? 2 : 3) : 4
 
 	const options = useMemo(() => {
-		const getOptions = (): string[] => {
-			const arr = [question.answer, ...question.other]
-			for (let i = arr.length - 1; i > 0; i--) {
-				const j = ~~(Math.random() * arr.length)
-				;[arr[i], arr[j]] = [arr[j], arr[i]]
-			}
-			arr.length = optionCount
-			return arr.includes(question.answer) ? arr : getOptions()
+		const other: string[] = question.other
+		other.length = optionCount - 1
+		const arr = [question.answer, ...other]
+		for (let i = arr.length - 1; i > 0; i--) {
+			const j = ~~(Math.random() * arr.length)
+			;[arr[i], arr[j]] = [arr[j], arr[i]]
 		}
-		return getOptions()
+		return arr
 	}, [optionCount, question.answer, question.other])
 
 	const totalRemainingMoney = useInGameStore('remainingMoney')
@@ -43,8 +41,8 @@ export default function Question() {
 	}, [optionValues, options, question.answer, setActiveCategory, setRemainingMoney])
 
 	return (
-		<Stack align='center' p='xl' style={{ height: '100vh' }}>
-			<Title align='center'>{category}</Title>
+		<Stack align='center' justify='center' p='xl' style={{ height: '100vh' }}>
+			<Title align='center'>{category.split('-')[0]}</Title>
 			<Text align='center'>{question.question}</Text>
 			<SimpleGrid breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]} cols={optionCount}>
 				{options.map((option, i) => {
