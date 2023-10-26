@@ -30,7 +30,8 @@ const gameState: GameState = {
 
 type GameAction = {
 	startGame: (questions: Questions) => void
-	setActiveCategory: (category: string) => void
+	setActiveCategory: (category: string | null) => void
+	setRemainingMoney: (amount: number) => void
 }
 
 const actionName = (actionName: keyof GameAction): [false, string] => [false, `game/${actionName}`]
@@ -53,7 +54,17 @@ const gameAction: StateCreator<GameStore, [['zustand/devtools', never]], [], Gam
 	setActiveCategory: category => {
 		const state = get()
 		if (!state.inGame) return
-		set({ activeCategory: { category, question: state.questions[category] } })
+		set({
+			activeCategory: category ? { category, question: state.questions[category] } : null,
+			remainingCategories: state.remainingCategories.map(remainingCategory => {
+				return remainingCategory === category ? null : remainingCategory
+			})
+		})
+	},
+	setRemainingMoney: amount => {
+		const state = get()
+		if (!state.inGame) return
+		set({ remainingMoney: amount })
 	}
 })
 

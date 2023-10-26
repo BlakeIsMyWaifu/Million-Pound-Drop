@@ -1,15 +1,14 @@
-import { NumberInput, Paper, SimpleGrid, Stack, Text, Title } from '@mantine/core'
+import { ActionIcon, Button, Group, NumberInput, Paper, SimpleGrid, Stack, Text, Title } from '@mantine/core'
 import { useListState, type UseListStateHandlers } from '@mantine/hooks'
-import { useMemo } from 'react'
+import { IconReload } from '@tabler/icons-react'
+import { useCallback, useMemo } from 'react'
 
 import { type Question, useInGameStore } from './useGameStore'
 
-type QuestionProps = {
-	category: string
-	question: Question
-}
+export default function Question() {
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const { category, question } = useInGameStore('activeCategory')!
 
-export default function Question({ category, question }: QuestionProps) {
 	// TODO remove options in later rounds
 	const options = useMemo(() => {
 		const arr = [question.answer, ...question.other]
@@ -29,13 +28,17 @@ export default function Question({ category, question }: QuestionProps) {
 		return totalRemainingMoney - totalSpent
 	}, [optionValues, totalRemainingMoney])
 
-	const maxSelected = useMemo(() => {
-		// TODO update when more options are removed
-		return optionValues.filter(value => value > 0).length >= 3
-	}, [optionValues])
+	const setRemainingMoney = useInGameStore('setRemainingMoney')
+	const setActiveCategory = useInGameStore('setActiveCategory')
+	const handleSubmit = useCallback(() => {
+		const correctAnswerIndex = options.findIndex(option => option === question.answer)
+		setRemainingMoney(optionValues[correctAnswerIndex])
+		setActiveCategory(null)
+	}, [optionValues, options, question.answer, setActiveCategory, setRemainingMoney])
 
 	return (
 		<Stack
+			align='center'
 			p='xl'
 			style={{
 				height: '100vh'
@@ -50,7 +53,7 @@ export default function Question({ category, question }: QuestionProps) {
 							handler={optionValueHandler}
 							index={i}
 							key={i}
-							maxSelected={maxSelected}
+							maxSelected={optionValues.filter(value => value > 0).length >= 3}
 							option={option}
 							remaining={remaining}
 							value={optionValues[i]}
@@ -58,7 +61,11 @@ export default function Question({ category, question }: QuestionProps) {
 					)
 				})}
 			</SimpleGrid>
-			<Text align='center'>Remaining Money: £{remaining.toString().replace(moneyRegex, ',')}</Text>
+			<Group position='center'>
+				<Text align='center'>Remaining Money: £{remaining.toString().replace(moneyRegex, ',')}</Text>
+				<ResetMoney handler={optionValueHandler} />
+			</Group>
+			<Submit handleSubmit={handleSubmit} remaining={remaining} />
 		</Stack>
 	)
 }
@@ -112,3 +119,33 @@ function Option({ handler, index, maxSelected, option, remaining, value }: Optio
 }
 
 const moneyRegex = /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g
+
+type ResetMoneyProps = {
+	handler: UseListStateHandlers<number>
+}
+
+function ResetMoney({ handler }: ResetMoneyProps) {
+	return (
+		<ActionIcon
+			variant='light'
+			onClick={() => {
+				handler.setState([0, 0, 0, 0])
+			}}
+		>
+			<IconReload size='1rem' />
+		</ActionIcon>
+	)
+}
+
+type SubmitProps = {
+	remaining: number
+	handleSubmit: () => void
+}
+
+function Submit({ remaining, handleSubmit }: SubmitProps) {
+	return (
+		<Button disabled={remaining !== 0} onClick={handleSubmit}>
+			Submit
+		</Button>
+	)
+}
