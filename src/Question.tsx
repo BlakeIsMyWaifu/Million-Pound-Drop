@@ -3,6 +3,7 @@ import { useListState, type UseListStateHandlers } from '@mantine/hooks'
 import { IconReload } from '@tabler/icons-react'
 import { useCallback, useMemo } from 'react'
 
+import { shuffle } from './shuffle'
 import { type Question, useInGameStore } from './useGameStore'
 
 export default function Question() {
@@ -16,11 +17,7 @@ export default function Question() {
 		const other: string[] = question.other
 		other.length = optionCount - 1
 		const arr = [question.answer, ...other]
-		for (let i = arr.length - 1; i > 0; i--) {
-			const j = ~~(Math.random() * arr.length)
-			;[arr[i], arr[j]] = [arr[j], arr[i]]
-		}
-		return arr
+		return shuffle(arr)
 	}, [optionCount, question.answer, question.other])
 
 	const totalRemainingMoney = useInGameStore('remainingMoney')
@@ -42,7 +39,7 @@ export default function Question() {
 
 	return (
 		<Stack align='center' justify='center' p='xl' style={{ height: '100vh' }}>
-			<Title align='center'>{category.split('-')[0]}</Title>
+			<Title align='center'>{category.split('---')[0]}</Title>
 			<Text align='center'>{question.question}</Text>
 			<SimpleGrid breakpoints={[{ maxWidth: '62rem', cols: 2, spacing: 'md' }]} cols={optionCount}>
 				{options.map((option, i) => {

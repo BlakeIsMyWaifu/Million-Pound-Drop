@@ -1,6 +1,8 @@
 import { create, type StateCreator } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
+import { shuffle } from './shuffle'
+
 export type Questions = Record<string, Question>
 export type Question = {
 	question: string
@@ -40,13 +42,14 @@ const actionName = (actionName: keyof GameAction, replace = false): [boolean, st
 const gameAction: StateCreator<GameStore, [['zustand/devtools', never]], [], GameAction> = (set, get) => ({
 	startGame: questions => {
 		if (get().inGame) return
+		const shuffledQuestions = Object.fromEntries(shuffle(Object.entries(questions)))
 		set(
 			{
 				inGame: true,
-				questions,
+				questions: shuffledQuestions,
 				round: 1,
 				activeCategory: null,
-				remainingCategories: Object.keys(questions),
+				remainingCategories: Object.keys(shuffledQuestions),
 				remainingMoney: 1_000_000
 			} satisfies ActiveGameState,
 			...actionName('startGame')
