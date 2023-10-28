@@ -1,6 +1,6 @@
 import { ActionIcon, Button, Group, NumberInput, Paper, SimpleGrid, Stack, Text, Title } from '@mantine/core'
 import { useListState, type UseListStateHandlers } from '@mantine/hooks'
-import { IconReload } from '@tabler/icons-react'
+import { IconCurrencyPound, IconReload } from '@tabler/icons-react'
 import { useCallback, useMemo } from 'react'
 
 import { shuffle } from './shuffle'
@@ -91,9 +91,8 @@ function Option({ handler, index, lastRound, maxSelected, option, remaining, val
 				</Text>
 				<NumberInput
 					disabled={maxSelected && value === 0}
-					formatter={value =>
-						Number.isNaN(parseFloat(value)) ? '£ ' : `£ ${value}`.replace(moneyRegex, ',')
-					}
+					formatter={value => (Number.isNaN(parseFloat(value)) ? '' : `${value}`.replace(moneyRegex, ','))}
+					icon={<IconCurrencyPound size='1rem' />}
 					max={remaining + value}
 					min={0}
 					parser={value => value.replace(/\$\s?|(,*)/g, '')}
